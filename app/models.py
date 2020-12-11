@@ -62,4 +62,15 @@ class User(db.Model):
         if not query:
             return False
         query.pw_reset = self.generate_password_reset()
+        print(query.pw_reset)
+        query.update()
+        return query
+
+    def check_pw_reset_code(self, pid):
+        return self.custom_query('pw_reset', pid)
+
+    def update_password(self, pid, password):
+        query = self.custom_query('pw_reset', pid)
+        query.password = self.hash_password(password)
+        query.pw_reset = None
         query.update()
