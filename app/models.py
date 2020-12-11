@@ -98,3 +98,33 @@ class Category(db.Model):
 
     def fetch_all(self):
         return self.query.order_by(Category.id).all()
+
+class Post(db.Model):
+    __tablename__ = 'posts'
+    id = db.Column(db.Integer, primary_key=True)
+    author = db.Column(db.String(100), nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    content = db.Column(db.String(5000), nullable=True)
+    date_time = db.Column(db.String(300), nullable=False)
+    status = db.Column(db.Boolean, nullable=False)
+    category = db.Column(db.String(100), nullable=False)
+
+    def add_post(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update_post(self):
+        db.session.update(self)
+        db.session.commit()
+
+    def delete_post(self):
+        query = self.custom_query('id', self.id).first()
+        db.session.delete(query)
+        db.session.commit()
+
+    def custom_query(self, query, value):
+        ''' custom user query. Pass through query, and value . example username:Ian '''
+        return self.query.filter_by(**{query:value}).first()
+
+    def fetch_all(self):
+        return self.query.order_by(Post.id).all()
