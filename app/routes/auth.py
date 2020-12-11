@@ -54,7 +54,6 @@ def auth_password_reset():
 
 @auth_bp.route('/auth/password/request', methods=['POST'])
 def auth_request_password_reset():
-    ## Needs updating
     form = AdminPasswordResetForm()
     query = User().update_password_reset_code(request.form.get('email'))
     
@@ -64,6 +63,7 @@ def auth_request_password_reset():
     
     if not query:
         flash('Incorrect Email. Please try again')
+        return redirect(url_for('auth_bp.auth_password_reset'))
 
     return redirect(url_for('auth_bp.auth_set_new_password', pid=query.pw_reset))
 
@@ -72,4 +72,20 @@ def auth_set_new_password(pid):
     if not User().check_pw_reset_code(pid):
         return redirect(url_for('auth_bp.auth_login_page'))
     
-    return render_template('auth/set-password.html', form=AdminSetNewPassword())
+    return render_template('auth/set-password.html', form=AdminSetNewPassword(), message=get_flashed_messages(), pid=pid)
+
+@auth_bp.route('/auth/password/update/<pid>', methods=['POST'])
+def auth_update_password(pid):
+    query = User().custom_query('pw_reset', pid)
+    form = AdminSetNewPassword()
+    
+    if not query:
+        return redirect(url_for('auth_bp.auth_login_page'))
+    if not form.validate_on_submit():
+        flash(list(form.errors.values())[0])
+        return redirect(url_for('auth_bp.auth_set_new_password', pid=pid))
+    
+    User().update_password(pid, request.form.get('password'))
+
+    flash('Password Updated. Please login.')
+    return redirect(url_for('auth_bp.auth_login_page'))
