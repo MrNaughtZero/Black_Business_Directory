@@ -1,8 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, validators, SelectField
+from wtforms import StringField, PasswordField, SubmitField, validators, SelectField, HiddenField
 from wtforms.validators import InputRequired, Length, EqualTo, Email, DataRequired, ValidationError
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
 import re
 from flask import request
+from app.models import Category
 
 ## Custom Validators ##
 
@@ -27,6 +29,12 @@ def category_length(FlaskForm, field):
         raise ValidationError('Category name must be a minimum 3 characters')
 
 ## Custom Validators End ##
+
+## Custom DB Queries /// Mainly use for SelectField choices
+
+def skill_level_choices():      
+    return Category.query.all()
+
 
 ## Auth Forms ##
 
@@ -57,6 +65,6 @@ class CreateCategory(FlaskForm):
 
 class CreatePost(FlaskForm):
     title = StringField('Title', validators=[InputRequired()])
-    content = StringField('Post Content', validators=[InputRequired()])
+    content = HiddenField('Post Content', validators=[InputRequired()])
     status = SelectField('Post Status', choices=[('Published', 'Published'), ('Draft', 'Draft')], validators=[InputRequired()])
-    category = SelectField('Post Category', choices=[('Published', 'Published'), ('Draft', 'Draft')], validators=[InputRequired()])
+    category = QuerySelectField('Post Category', validators=[InputRequired()], get_label='category_name', query_factory=skill_level_choices)
