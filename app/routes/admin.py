@@ -1,8 +1,8 @@
 from flask import Flask, Blueprint, request, url_for, redirect, flash, get_flashed_messages, render_template
 from flask_login import login_required
 from app.login_decorators import admin_required
-from app.models import Category
-from app.forms import CreateCategory
+from app.models import Category, Post
+from app.forms import CreateCategory, CreatePost
 
 admin_bp = Blueprint("admin_bp", __name__)
 
@@ -38,3 +38,11 @@ def remove_category(cat_id):
     Category(id=cat_id).delete_category()
     flash('Category Deleted')
     return redirect(url_for('admin_bp.category_page'))
+
+@admin_bp.route('/dashboard/posts', methods=['GET'])
+def posts():
+    return render_template('/admin/posts.html', posts=Post().fetch_all(), message=get_flashed_messages())
+
+@admin_bp.route('/dashboard/create/post', methods=['GET'])
+def create_post():
+    return render_template('/admin/create-post.html', form=CreatePost(), message=get_flashed_messages())
