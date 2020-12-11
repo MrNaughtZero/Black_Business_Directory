@@ -34,3 +34,10 @@ class AdminRegister(FlaskForm):
 class AdminLogin(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(max=300)])
     password = PasswordField(validators=[InputRequired()])
+
+class AdminPasswordResetForm(FlaskForm):
+    email = StringField(validators=[InputRequired(), Length(max=300), validate_email])
+
+class AdminSetNewPassword(FlaskForm):
+    password = PasswordField(validators=[InputRequired(), validate_password_length])
+    confirm_password = PasswordField(validators=[InputRequired(), validate_passwords_match])
