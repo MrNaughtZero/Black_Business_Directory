@@ -106,7 +106,7 @@ class Post(db.Model):
     title = db.Column(db.String(100), nullable=False)
     content = db.Column(db.String(5000), nullable=True)
     date_time = db.Column(db.String(300), nullable=False)
-    status = db.Column(db.Boolean, nullable=False)
+    status = db.Column(db.String(50), nullable=False)
     category = db.Column(db.String(100), nullable=False)
 
     def add_post(self):
