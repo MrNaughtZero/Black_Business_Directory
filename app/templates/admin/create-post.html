@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    {% include 'include/styles.html' %}
+</head>
+<body class="admin-dashboard-body" onload="loadTextEditor('post-content')">
+    {% include 'include/admin/side-navigation.html' %}
+    <main class="admin-dash-main">
+       <div class="admin-all-posts-wrapper">
+            <div class="create-blog-post-header">
+                <h2 id="new-blog-post-heading">New Blog Post</h2>
+                <a href="#" id="cancel-blog-post">Return to all blog posts</a>
+            </div>
+            <form method="POST" action="/" class="form-create-post">
+                <ul>
+                    <li>
+                        {{form.title(placeholder="Enter a title", id="new-blog-title")}}
+                    </li>
+                    <li>
+                        <textarea name="post-content"></textarea>
+                    </li>
+                    <li>
+                        <label for="post-status" id="new-post-status">Post Status:</label>
+                        {{form.status}}
+                    </li>
+                    <li>
+                        <label for="post-car" id="new-post-cat">Post Category:</label>
+                        {{form.category}}
+                    </li>
+                    <li id="submit-btn-li">
+                        <button type="submit" class="btn btn-primary btn-submit-post">Create Post</button>
+                    </li>
+                </ul>
+        
+            </form>
+       </div>
+    </main>
+
+
+
+    {% include 'include/scripts.html' %}
+</body>
+</html>
