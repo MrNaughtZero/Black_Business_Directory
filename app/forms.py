@@ -22,7 +22,13 @@ def validate_passwords_match(FlaskForm, field):
     if field.data != request.form.get('password'):
         raise ValidationError('Both password must match')
 
+def category_length(FlaskForm, field):
+    if len(field.data) < 3:
+        raise ValidationError('Category name must be a minimum 3 characters')
+
 ## Custom Validators End ##
+
+## Auth Forms ##
 
 class AdminRegister(FlaskForm):
     email = StringField(validators=[InputRequired(), Length(max=300), validate_email])
@@ -41,3 +47,10 @@ class AdminPasswordResetForm(FlaskForm):
 class AdminSetNewPassword(FlaskForm):
     password = PasswordField(validators=[InputRequired(), validate_password_length])
     confirm_password = PasswordField(validators=[InputRequired(), validate_passwords_match])
+
+## Auth Forms End ##
+
+## Cat/Post forms ##
+
+class CreateCategory(FlaskForm):
+    cat_name = StringField('Category Name', validators=[InputRequired(), category_length])
