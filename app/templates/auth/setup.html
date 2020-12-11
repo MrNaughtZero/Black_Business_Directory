@@ -7,10 +7,38 @@
     {% include 'include/styles.html' %}
 </head>
 <body>
-    <nav class="navbar navbar-light bg-light">
-        <span class="navbar-brand mb-0 h1">Navbar</span>
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1">Mahali - Admin Registration</span>
     </nav>
     
+    <main>
+        <div class="auth-form-container">
+            <form class="auth-form" method="POST" action="/auth/setup/create/account">
+                <div class="form-group">
+                    <label for="auth-admin-register-email">Email address</label>
+                    {{form.email(class="form-control", placeholder="Enter Email", id="auth-admin-register-email")}}
+                  </div>
+                  <div class="form-group">
+                    <label for="auth-admin-register-username">Username</label>
+                    {{form.username(class="form-control", placeholder="Enter Password", id="auth-admin-register-username")}}
+                  </div>
+                  <div class="form-group">
+                    <label for="auth-admin-register-password">Password</label>
+                    {{form.password(class="form-control", placeholder="Enter Password", id="auth-admin-register-password")}}
+                  </div>
+                  <div class="form-group">
+                    <label for="auth-admin-confirm-password-email">Confirm Password</label>
+                    {{form.confirm_password(class="form-control", placeholder="Enter Password", id="auth-admin-confirm-password-email")}}
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-auth-form">Register</button>
+                  {{form.csrf_token}}
+            </form>
+
+            <div class="flashed">
+                {{message[0] | replace('[', '') | replace(']', '') | replace("'", '')   }}
+            </div>
+        </div>
+    </main>
     
     
     
