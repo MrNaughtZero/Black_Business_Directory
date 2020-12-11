@@ -38,7 +38,11 @@ def auth_login_attempt():
         return redirect(url_for('auth_bp.auth_login_page'))
     
     login_user(query)
-    return 'You are now logged in' ## Redirect to dashboard once created
+    if current_user.get_role() == 'admin':
+        return redirect(url_for('admin_bp.dashboard'))
+    else:
+        ## This needs to be updated if user accounts are to be updated in the future
+        return redirect(url_for('main_bp.index'))
 
 
 @auth_bp.route('/auth/logout', methods=['GET'])
