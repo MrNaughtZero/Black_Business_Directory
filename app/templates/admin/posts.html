@@ -6,20 +6,56 @@
     <title>Dashboard</title>
     {% include 'include/styles.html' %}
 </head>
-<body class="admin-dashboard-body">
+<body class="admin-dashboard-body admin-posts-backend-body">
     {% include 'include/admin/side-navigation.html' %}
-    <main class="admin-dash-main">
-       <div class="admin-all-posts-wrapper">
-           {% for item in posts %}
-                <div class="post-item">
-                    <h3>{{item.title}}</h3>
-                    <h3>{{item.author}}</h3>
-                    <h3>{{item.category}}</h3>
-                    <h3>{{item.status}}</h3>
-                    <h3>{{item.date_time}}</h3>
+    <main>
+        <div class="admin-all-posts-panel">
+            <div class="admin-all-posts-header">
+                <h2>Articles</h2>
+                <span id="article-page-breadcrumb">
+                    Dashboard > Posts
+                </span>
+            </div>
+            <div class="admin-all-posts-table-container">
+                <div class="add-article-btn">
+                    <a href="{{url_for('admin_bp.create_post')}}">
+                        <button type="button" class="btn btn-primary btn-add-article">Add Article</button>
+                    </a>
                 </div>
-            {% endfor %}
-       </div>
+                <div class="posts-search-filter">
+                    <div class="records-per-page">
+                        <input type="number" id="points" name="points" step="1" value="10">
+                        <p id="records-per-page">Records Per Page</p>
+                    </div>
+                    <div class="search-posts">
+                        <label for="search-posts" id="searchposts">Search: </label>
+                        <input type="text" id="searchinputbox">
+                    </div>
+                </div>
+                <div class="show-all-posts">
+                    <table id="posts-table" style="width:100%">
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Date</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                        </tr>
+                        {% for item in posts %}
+                            <tr class="posts-details">
+                                <td>{{item.title}}</td>
+                                <td>{{item.author}}</td>
+                                <td>{{item.date_time}}</td>
+                                <td>{{item.category}}</td>
+                                <td>{{item.status}}</td>
+                            </tr>
+                        {% endfor %}
+                    
+                    
+                    </table>
+                </div>
+            </div>
+        </div>
     </main>
 
 
