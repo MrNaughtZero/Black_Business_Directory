@@ -4,7 +4,7 @@ from flask_login import LoginManager
 
 app = Flask(__name__)
 app.debug = True
-app.secret_key ='3o730927309nwbdnbsdjhgsda097ougdskb29836iwfukjb'
+app.config.from_envvar('APP_SETTINGS')
 
 from .routes import auth,admin,main
  
