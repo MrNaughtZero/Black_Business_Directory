@@ -11,7 +11,6 @@ class User(db.Model):
     email = db.Column(db.String(255), nullable=False)
     password = db.Column(db.String(255), nullable=False)
     role = db.Column(db.String(100), nullable=False)
-    login_attempts = db.Column(db.Integer, nullable=True)
     pw_reset = db.Column(db.String(500), nullable=True)
     
     def get_id(self):
@@ -48,6 +47,19 @@ class User(db.Model):
         generate = string.ascii_letters + string.ascii_lowercase + string.ascii_uppercase
         return ''.join(choice(generate) for i in range(StringLength))
 
-    def check_for_admin(self):
-        ''' check if admin exists. if so, return false '''
-        return self.query.filter_by(role='admin').first()
+    def custom_query(self, query, value):
+        ''' custom user query. Pass through query, and value . example username:Ian '''
+        return self.query.filter_by(**{query:value}).first()
+
+    def login_attempt(self, username, password):
+        query = self.custom_query('username', username)
+        if (not query) or (query.password != self.hash_password(password)):
+            return False
+        return query
+
+    def update_password_reset_code(self, email):
+        query = self.custom_query('email', email)
+        if not query:
+            return False
+        query.pw_reset = self.generate_password_reset()
+        query.update()
