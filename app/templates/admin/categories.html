@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    {% include 'include/styles.html' %}
+</head>
+<body class="admin-dashboard-body">
+    {% include 'include/admin/side-navigation.html' %}
+    <main class="admin-dash-main">
+        <div class="post-categories-container">
+            <div class="category-block-one">
+                <form method="POST" action="/dashboard/categories/add">
+                    <h2>Add New Category</h2>
+                    <div class="form-group">
+                      <label for="CategoryName">Category Name</label>
+                      {{form.cat_name(placeholder="Enter Category Name", class="form-control")}}
+                    </div>
+                    {{form.csrf_token}}
+                    <button type="submit" class="btn btn-primary">Create Category</button>
+                  </form>
+            </div>
+
+            <div class="category-block-two">
+                <div class="flashed">
+                    {{message[0] | replace('[', '') | replace(']', '') | replace("'", '')   }}
+                </div>
+                {% for item in cat %}
+                    <div class="category-block">
+                        <h4>{{item.category_name}}</h4>
+                        <a class="cat-delete-link" href="{{url_for('admin_bp.remove_category', cat_id=item.id)}}">Delete</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+
+
+
+    {% include 'include/scripts.html' %}
+</body>
+</html>
