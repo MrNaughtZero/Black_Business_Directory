@@ -5,15 +5,21 @@
         </div>
         <div class="side-nav-links">
             <ul>
-                <li>
-                    Dashboard
-                </li>
-                <li>
-                    Posts
-                </li>
-                <li>
-                    Categories
-                </li>
+                <a href="{{url_for('admin_bp.dashboard')}}">
+                    <li>
+                        Dashboard
+                    </li>
+                </a>
+                <a href="{{url_for('admin_bp.posts')}}">
+                    <li>
+                        Posts
+                    </li>
+                </a>
+                <a href="{{url_for('admin_bp.category_page')}}">
+                    <li>
+                        Categories
+                    </li>
+                </a>
                 <li>
                     Bookstore
                 </li>
