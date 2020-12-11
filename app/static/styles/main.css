@@ -6,8 +6,11 @@ html, body {
 }
 
 ul li {
-    margin: 0;
     list-style-type: none;
+}
+
+ul {
+    padding: 0;
 }
 
 /* Flashed Messages */
@@ -47,4 +50,83 @@ a#reset-pw-link {
     display: flex;
     justify-content: flex-end;
     font-size: 10px;
+}
+
+/* Admin Dashboard */
+
+/* Admin Navigation */
+
+.admin-dashboard-body {
+    display: flex;
+}
+
+.admin-side-navigation {
+    min-height: 100vh;
+    width: 200px;
+    color: white;
+}
+
+.side-nav-branding {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.side-nav-links {
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    align-items: center;
+}
+
+.side-nav-links ul li {
+    padding: 10px;
+}
+
+
+/* admin main content contained */
+
+.dashboard-content-wrapper {
+    border: 1px solid;
+    padding: 10px;
+}
+
+.admin-dash-main {
+    width: 100%;
+}
+
+/* admin post categories page */
+
+.post-categories-container {
+    display: flex;
+    border: 1px solid;
+    padding: 40px;
+    justify-content: space-around;
+}
+
+.post-categories-container .flashed {
+    margin-bottom: 20px;
+}
+
+.category-block-one {
+    border-right: 1px solid grey;
+    padding-right: 37px;
+}
+
+.category-block-two {
+    width: 50%;
+}
+
+.category-block {
+    display: flex;
+    width: 100%;
+    border: 1px solid;
+    padding: 20px;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+a.cat-delete-link {
+    color: red;
+    position: relative;
+    top: 5px;
 }
