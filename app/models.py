@@ -73,3 +73,28 @@ class User(db.Model):
         query.password = self.hash_password(password)
         query.pw_reset = None
         query.update()
+
+class Category(db.Model):
+    __tablename__ = 'categories'
+    id = db.Column(db.Integer, primary_key=True)
+    category_name = db.Column(db.String(100), nullable=False)
+
+    def add_category(self):
+        db.session.add(self)
+        db.session.commit()
+    
+    def update_category(self):
+        db.session.update(self)
+        db.session.commit()
+    
+    def delete_category(self):
+        query = self.query.filter_by(id=self.id).first()
+        db.session.delete(query)
+        db.session.commit()
+
+    def custom_query(self, query, value):
+        ''' custom user query. Pass through query, and value . example username:Ian '''
+        return self.query.filter_by(**{query:value}).first()
+
+    def fetch_all(self):
+        return self.query.order_by(Category.id).all()
