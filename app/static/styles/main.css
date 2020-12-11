@@ -130,3 +130,64 @@ a.cat-delete-link {
     position: relative;
     top: 5px;
 }
+
+/* admin create blog post */
+
+.admin-all-posts-wrapper {
+    max-width: 70%;
+    margin: 0 auto;
+    position: relative;
+    top: 100px;
+}
+
+.create-blog-post-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+h2#new-blog-post-heading {
+    padding-bottom: 20px;
+    position: relative;
+    left: 8px;
+}
+
+a#cancel-blog-post {
+    color: red;
+    position: relative;
+    top: 11px;
+}
+
+input#new-blog-title {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+}
+
+div#cke_post-content {
+    border: none;
+    position: relative;
+    left: 7px;
+    margin-bottom: 20px;
+}
+
+.admin-all-posts-wrapper label {
+    width: 130px;
+    position: relative;
+    left: 10px;
+}
+
+.admin-all-posts-wrapper select {
+    padding: 10px;
+    border: none;
+}
+
+li#submit-btn-li {
+    margin-top: 20px;
+}
+
+.btn-submit-post {
+    width: 100%;
+    position: relative;
+    left: 6px;
+}
