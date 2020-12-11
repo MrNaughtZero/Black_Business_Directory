@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    {% include 'include/styles.html' %}
+</head>
+<body class="admin-dashboard-body">
+    {% include 'include/admin/side-navigation.html' %}
+    <main class="admin-dash-main">
+       <div class="admin-all-posts-wrapper">
+           {% for item in posts %}
+                <div class="post-item">
+                    <h3>{{item.title}}</h3>
+                    <h3>{{item.author}}</h3>
+                    <h3>{{item.category}}</h3>
+                    <h3>{{item.status}}</h3>
+                    <h3>{{item.date_time}}</h3>
+                </div>
+            {% endfor %}
+       </div>
+    </main>
+
+
+
+    {% include 'include/scripts.html' %}
+</body>
+</html>
