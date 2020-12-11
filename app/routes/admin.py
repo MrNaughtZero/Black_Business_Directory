@@ -1,8 +1,9 @@
 from flask import Flask, Blueprint, request, url_for, redirect, flash, get_flashed_messages, render_template
-from flask_login import login_required
+from flask_login import login_required, current_user
 from app.login_decorators import admin_required
 from app.models import Category, Post
 from app.forms import CreateCategory, CreatePost
+from app.classes import Utilities
 
 admin_bp = Blueprint("admin_bp", __name__)
 
@@ -46,3 +47,17 @@ def posts():
 @admin_bp.route('/dashboard/create/post', methods=['GET'])
 def create_post():
     return render_template('/admin/create-post.html', form=CreatePost(), message=get_flashed_messages())
+
+@admin_bp.route('/dashboard/add/post', methods=['POST'])
+@admin_required
+def add_post():
+    form = CreatePost()
+    
+    if not form.validate_on_submit():
+        flash(list(form.errors.values())[0])
+        return redirect(url_for('admin_bp.create_post'))
+    
+    Post(author=current_user.get_username(), title=request.form.get('title'), content=request.form.get('content'), date_time=Utilities.post_timestamp(), status=request.form.get('status'), category=request.form.get('category')).add_post()
+
+    flash('Your post has been created.')
+    return redirect(url_for('admin_bp.posts'))
