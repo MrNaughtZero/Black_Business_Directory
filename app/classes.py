@@ -1,6 +1,7 @@
 import smtplib
 from smtplib import ssl
 from flask import current_app
+from datetime import datetime as dt
 
 class Emails():
     ''' Class for sending emails. User Registration, New Business, Forgotten Password, Unauthorised Admin Attempts, Account Lockout '''
@@ -27,3 +28,8 @@ class Emails():
         message_content = f'subject: {subject}\n\n{body}'
         
         emailInformation(send_to, message_content)
+
+class Utilities():
+    ''' class full of static methods'''
+    def post_timestamp():
+        return dt.now().strftime("%d %B, %Y")
