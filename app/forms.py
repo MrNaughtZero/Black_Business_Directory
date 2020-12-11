@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, validators
+from wtforms import StringField, PasswordField, SubmitField, validators, SelectField
 from wtforms.validators import InputRequired, Length, EqualTo, Email, DataRequired, ValidationError
 import re
 from flask import request
@@ -54,3 +54,9 @@ class AdminSetNewPassword(FlaskForm):
 
 class CreateCategory(FlaskForm):
     cat_name = StringField('Category Name', validators=[InputRequired(), category_length])
+
+class CreatePost(FlaskForm):
+    title = StringField('Title', validators=[InputRequired()])
+    content = StringField('Post Content', validators=[InputRequired()])
+    status = SelectField('Post Status', choices=[('Published', 'Published'), ('Draft', 'Draft')], validators=[InputRequired()])
+    category = SelectField('Post Category', choices=[('Published', 'Published'), ('Draft', 'Draft')], validators=[InputRequired()])
