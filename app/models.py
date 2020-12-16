@@ -104,7 +104,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author = db.Column(db.String(100), nullable=False)
     title = db.Column(db.String(100), nullable=False)
-    content = db.Column(db.String(5000), nullable=True)
+    content = db.Column(db.TEXT(5000), nullable=True)
     date_time = db.Column(db.String(300), nullable=False)
     status = db.Column(db.String(50), nullable=False)
     category = db.Column(db.String(100), nullable=False)
@@ -118,9 +118,12 @@ class Post(db.Model):
         db.session.commit()
 
     def delete_post(self):
-        query = self.custom_query('id', self.id).first()
+        query = self.custom_query('id', self.id)
+        if not query:
+            return False
         db.session.delete(query)
         db.session.commit()
+        return True
 
     def custom_query(self, query, value):
         ''' custom user query. Pass through query, and value . example username:Ian '''
