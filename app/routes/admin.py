@@ -4,6 +4,7 @@ from app.login_decorators import admin_required
 from app.models import Category, Post
 from app.forms import CreateCategory, CreatePost
 from app.classes import Utilities
+import re
 
 admin_bp = Blueprint("admin_bp", __name__)
 
@@ -56,8 +57,22 @@ def add_post():
     if not form.validate_on_submit():
         flash(list(form.errors.values())[0])
         return redirect(url_for('admin_bp.create_post'))
-    
-    Post(author=current_user.get_username(), title=request.form.get('title'), content=request.form.get('content'), date_time=Utilities.post_timestamp(), status=request.form.get('status'), category=request.form.get('category')).add_post()
+    Post(author=current_user.get_username(), title=request.form.get('title'), content=re.sub(r'\s+', '', request.form.get('content')), date_time=Utilities.post_timestamp(), status=request.form.get('status'), category=Category().custom_query('id', request.form.get('category')).category_name).add_post()
 
     flash('Your post has been created.')
+    return redirect(url_for('admin_bp.posts'))
+
+@admin_bp.route('/dashboard/edit/post/<postID>', methods=['GET'])
+@admin_required
+def edit_post(postID):
+    query = Post().custom_query('id', postID)
+    if not query:
+        return redirect(url_for('admin_bp.dashboard'))
+    return render_template('/admin/edit-post.html', form=CreatePost(), message=get_flashed_messages(), post=query)
+
+@admin_bp.route('/dashboard/delete/post/<postID>', methods=['GET'])
+@admin_required
+def delete_post(postID):
+    if not Post(id=postID).delete_post():
+        return redirect(url_for('admin_bp.dashboard'))
     return redirect(url_for('admin_bp.posts'))
