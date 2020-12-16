@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, validators, SelectField, HiddenField
+from wtforms import StringField, PasswordField, SubmitField, validators, SelectField, HiddenField, TextAreaField
 from wtforms.validators import InputRequired, Length, EqualTo, Email, DataRequired, ValidationError
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 import re
@@ -60,6 +60,7 @@ class AdminSetNewPassword(FlaskForm):
 
 class CreateCategory(FlaskForm):
     cat_name = StringField('Category Name', validators=[InputRequired(), category_length])
+    cat_description = TextAreaField('Category Description')
 
 class CreatePost(FlaskForm):
     title = StringField('Title', validators=[InputRequired()])
