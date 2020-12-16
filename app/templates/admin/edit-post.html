@@ -6,7 +6,7 @@
     <title>Dashboard</title>
     {% include 'include/styles.html' %}
 </head>
-<body class="admin-dashboard-body" onload="loadTextEditor('post-content')">
+<body class="admin-dashboard-body" onload="loadTextEditor('post-content');preloadTextEditor('post-content', '{{post.content|safe}}')">
     {% include 'include/admin/side-navigation.html' %}
     <main class="admin-dash-main">
        <div class="admin-all-posts-wrapper">
@@ -17,28 +17,29 @@
                 <h2 id="new-blog-post-heading">New Blog Post</h2>
                 <a href="#" id="cancel-blog-post">Return to all blog posts</a>
             </div>
-            <form method="POST" action="/dashboard/add/post" class="form-create-post">
+            <form method="POST" action="/dashboard/update/post" class="form-create-post">
                 <ul>
                     <li>
-                        {{form.title(placeholder="Enter a title", id="new-blog-title")}}
+                        {{form.title(value=post.title, id="new-blog-title")}}
                     </li>
                     <li>
-                        <textarea name="post-content"></textarea>
+                        <textarea id="post-content" name="post-content">
+                            
+                        </textarea>
                     </li>
                     <li>
                         <label for="post-status" id="new-post-status">Post Status:</label>
-                        {{form.status}}
+                        {{form.status(value=post.status)}}
                     </li>
                     {{form.content}}
                     <li>
                         <label for="post-car" id="new-post-cat">Post Category:</label>
-                        {{form.category}}
+                        {{form.category(value=post.category)}}
                     </li>
                     <li id="submit-btn-li">
-                        <button onclick="saveTextEditorValue('post-content')" type="submit" class="btn btn-primary btn-submit-post">Create Post</button>
+                        <button onclick="saveTextEditorValue('post-content')" type="submit" class="btn btn-primary btn-submit-post">Update Post</button>
                     </li>
                 </ul>
-                {{form.csrf_token}}
             </form>
        </div>
     </main>
@@ -46,5 +47,8 @@
 
 
     {% include 'include/scripts.html' %}
+    <script>
+        
+    </script>
 </body>
 </html>
