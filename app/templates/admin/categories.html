@@ -9,13 +9,22 @@
 <body class="admin-dashboard-body">
     {% include 'include/admin/side-navigation.html' %}
     <main class="admin-dash-main">
+        <h2 id="cat-heading">Categories</h2>
+        <div class="cat-search-box">
+            <input type="text" id="search-categories">
+            <button type="button" id="search-cat-btn">Search Categories</button>
+        </div>
         <div class="post-categories-container">
             <div class="category-block-one">
                 <form method="POST" action="/dashboard/categories/add">
-                    <h2>Add New Category</h2>
+                    <h2 id="add-new-cat">Add New Category</h2>
                     <div class="form-group">
-                      <label for="CategoryName">Category Name</label>
+                        <label for="CategoryName">Name</label>
                       {{form.cat_name(placeholder="Enter Category Name", class="form-control")}}
+                    </div>
+                    <div class="form-group">
+                        <label for="CategorDescription">Description</label>
+                      {{form.cat_description(class="form-control")}}
                     </div>
                     {{form.csrf_token}}
                     <button type="submit" class="btn btn-primary">Create Category</button>
@@ -23,15 +32,43 @@
             </div>
 
             <div class="category-block-two">
-                <div class="flashed">
-                    {{message[0] | replace('[', '') | replace(']', '') | replace("'", '')   }}
+                <div class="cat-table-actions">
+                    <select class="select-actions" for="table-actions">
+                        <option value="Delete Selected">Delete Selected</option>
+                        <option value="Delete All">Delete All</option>
+                    </select>
+                    <button type="button" class="btn btn-danger btn-action-select">Confirm</button>
                 </div>
-                {% for item in cat %}
-                    <div class="category-block">
-                        <h4>{{item.category_name}}</h4>
-                        <a class="cat-delete-link" href="{{url_for('admin_bp.remove_category', cat_id=item.id)}}">Delete</a>
-                    </div>
-                {% endfor %}
+                <table class="cat-table">
+                    <tr>
+                        <th class="th-name">
+                            Name
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Count
+                        </th>
+                    </tr>
+                    {% for item in cat %}
+                        <tr>
+                            <td>
+                                <input type="checkbox" value="{{item.id}}">
+                                <span>{{item.category_name}}</span> 
+                            </td>
+                            <td>
+                                <span>{{item.category_description}}</span> 
+                            </td>
+                            <td class="cat-count">
+                                2
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+
+                
             </div>
         </div>
     </main>
