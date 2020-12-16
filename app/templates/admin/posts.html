@@ -8,12 +8,12 @@
 </head>
 <body class="admin-dashboard-body admin-posts-backend-body">
     {% include 'include/admin/side-navigation.html' %}
-    <main>
+    <main class="admin-dash-main">
         <div class="admin-all-posts-panel">
             <div class="admin-all-posts-header">
                 <h2>Articles</h2>
-                <span id="article-page-breadcrumb">
-                    Dashboard > Posts
+                <span class="article-page-breadcrumb">
+                    <a href="{{url_for('admin_bp.dashboard')}}">Dashboard</a> > All Posts
                 </span>
             </div>
             <div class="admin-all-posts-table-container">
@@ -40,6 +40,7 @@
                             <th>Date</th>
                             <th>Category</th>
                             <th>Status</th>
+                            <th>Actions</th>
                         </tr>
                         {% for item in posts %}
                             <tr class="posts-details">
@@ -48,6 +49,12 @@
                                 <td>{{item.date_time}}</td>
                                 <td>{{item.category}}</td>
                                 <td>{{item.status}}</td>
+                                <td class="actions-td">
+                                    <a href="#">
+                                        <a href="{{url_for('admin_bp.edit_post', postID=item.id)}}">Edit</a> | <a href="{{url_for('admin_bp.delete_post', postID=item.id)}}">Delete</a>
+                                            
+                                    </a>
+                                </td>
                             </tr>
                         {% endfor %}
                     
