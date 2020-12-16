@@ -3,6 +3,7 @@
 html, body {
     margin: 0;
     padding: 0;
+    font-family: "Catamaran", sans-serif;
 }
 
 ul li {
@@ -69,26 +70,67 @@ a#reset-pw-link {
     display: flex;
 }
 
+
+
 .admin-side-navigation {
     min-height: 100vh;
     width: 200px;
     color: white;
+    position: fixed;
 }
 
 .side-nav-branding {
     text-align: center;
     margin-top: 20px;
+    padding-bottom: 1px;
+    border-bottom: 2px solid #e6e6e6;
+    margin-bottom: 20px;
 }
 
 .side-nav-links {
     display: flex;
-    justify-content: center;
-    font-size: 18px;
     align-items: center;
+}
+
+.side-nav-links ul {
+    width: 100%;
+    overflow:hidden;
+}
+
+.side-nav-links a:hover {
+    text-decoration: none;
 }
 
 .side-nav-links ul li {
     padding: 10px;
+    color: white;
+}
+
+.side-nav-links svg {
+    position: relative;
+    bottom: 2px;
+}
+
+svg#svg-home {
+    position: relative;
+    bottom: 4px;
+}
+
+.logout-user {
+    position: absolute;
+    bottom: 3%;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    padding-top: 22px;
+    border-top: 1px solid #e6e6e6;
+}
+
+.hidden-post-links {
+    display: none;
+    position: relative;
+    left: 10px;
+    font-size: 13px;
 }
 
 
@@ -101,15 +143,40 @@ a#reset-pw-link {
 
 .admin-dash-main {
     width: 100%;
+    margin-left: 200px;
 }
 
 /* admin post categories page */
 
+.cat-search-box {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+}
+
+input#search-categories {
+    border: 1px solid #E0E0E0;
+    margin-right: 4px;
+}
+
+button#search-cat-btn {
+    border: none;
+}
+
+h2#cat-heading {
+    font-weight: 300;
+    padding: 50px 0px 0px 50px;
+}
+
 .post-categories-container {
     display: flex;
-    border: 1px solid;
     padding: 40px;
     justify-content: space-around;
+}
+
+h2#add-new-cat {
+    font-weight: 300;
+    margin-bottom: 50px;
 }
 
 .post-categories-container .flashed {
@@ -117,12 +184,63 @@ a#reset-pw-link {
 }
 
 .category-block-one {
-    border-right: 1px solid grey;
     padding-right: 37px;
+    width: 40%;
 }
 
 .category-block-two {
     width: 50%;
+}
+
+/* table actions */
+
+.cat-table-actions {
+    position: relative;
+    bottom: 26px;
+}
+
+select.select-actions {
+    padding: 5px;
+    border: none;
+}
+
+button.btn.btn-danger.btn-action-select {
+    height: 28px;
+    padding: 0px;
+    position: relative;
+    bottom: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 13px;
+}
+
+/* cat table */
+
+.cat-table {
+    width: 100%;
+    position: relative;
+    bottom: 17px;
+    border: 1px solid #E0E0E0;
+    height: 250px;
+}
+
+.cat-table th {
+    font-weight: 300;
+    width: 33.3%;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+th.th-name {
+    padding-left: 27px;
+}
+
+.cat-table td {
+    padding: 10px;
+}
+
+.cat-table tr:nth-child(even) {
+    background: #e6e6e6;
 }
 
 .category-block {
@@ -224,9 +342,13 @@ li#submit-btn-li {
     margin-bottom: 20px;
 }
 
-span#article-page-breadcrumb {
+span.article-page-breadcrumb {
     position: relative;
     top: 13px;
+}
+
+.article-page-breadcrumb a:hover {
+    text-decoration: none;
 }
 
 .add-article-btn {
@@ -289,4 +411,108 @@ tr.posts-details td {
 
 .posts-details td{
     border-right: 1px solid white;
+}
+
+.posts-details a {
+    color: inherit;
+}
+
+.posts-details a:hover {
+    text-decoration: none;
+}
+
+svg.edit-post-pencil {
+    position: relative;
+    bottom: 2px;
+}
+
+td.actions-td {
+    width: 100px;
+}
+
+/* Front End */
+
+/* nav */
+
+.frontend-nav {
+    z-index: 99;
+}
+
+a.navbar-brand {
+    padding-left: 20px;
+    position: relative;
+    top: 10px;
+}
+
+h4#brand-sub {
+    color: white;
+    font-size: 15px;
+    text-align: center;
+    padding-top: 7px;
+}
+
+.navbar-nav a {
+    color: white;
+    font-size: 20px;
+    margin: 10px;
+}
+
+/* hero */
+
+div#navbarNavAltMarkup {
+    justify-content: flex-end;
+}
+
+div#carouselExampleSlidesOnly {
+    margin-top: -142px;
+}
+
+.w-100 {
+    height: 100vh;
+}
+
+h1.welcome-heading {
+    z-index: 99!important;
+    color: white;
+    position: absolute;
+    top: 38%;
+    padding-left: 100px;
+    max-width: 800px;
+    font-size: 51px;
+}
+
+/* about mahali */
+
+.about-mahali-wrapper {
+    display: flex;
+}
+
+.about-paragraph {
+    width: 70%;
+    padding-left: 90px;
+    padding-top: 50px;
+}
+
+.our-mission {
+    width: 30%;
+    text-align: center;
+    position: relative;
+    bottom: 32px;
+}
+
+.about-headings {
+    position: relative;
+    left: 91px;
+    top: 29px;
+}
+
+.about-headings h4 {
+    padding-bottom: 30px;
+}
+
+.about-headings h2 {
+    padding-bottom: 30px;
+    border-bottom: 4px solid black;
+    width: 139px;
+    white-space: nowrap;
 }
