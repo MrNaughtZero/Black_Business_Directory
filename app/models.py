@@ -77,6 +77,7 @@ class User(db.Model):
 class Category(db.Model):
     __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(300), nullable=True)
     category_name = db.Column(db.String(100), nullable=False)
 
     def add_category(self):
