@@ -32,10 +32,8 @@ def category_length(FlaskForm, field):
 
 ## Custom DB Queries /// Mainly use for SelectField choices
 
-def skill_level_choices():      
+def category_choices():      
     return Category.query.all()
-
-
 ## Auth Forms ##
 
 class AdminRegister(FlaskForm):
@@ -67,4 +65,4 @@ class CreatePost(FlaskForm):
     title = StringField('Title', validators=[InputRequired()])
     content = HiddenField('Post Content', validators=[InputRequired()])
     status = SelectField('Post Status', choices=[('Published', 'Published'), ('Draft', 'Draft')], validators=[InputRequired()])
-    category = QuerySelectField('Post Category', validators=[InputRequired()], get_label='category_name', query_factory=skill_level_choices)
+    category = QuerySelectField('Post Category', validators=[InputRequired()], query_factory=category_choices, get_label='category_name')
