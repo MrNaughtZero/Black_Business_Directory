@@ -79,6 +79,8 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(300), nullable=True)
     category_name = db.Column(db.String(100), nullable=False)
+    slug = db.Column(db.String(300), nullable=False)
+    count = db.Column(db.Integer, nullable=True, default='0')
 
     def add_category(self):
         db.session.add(self)
