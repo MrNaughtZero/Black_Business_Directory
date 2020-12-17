@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, validators, SelectField, HiddenField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, validators, SelectField, HiddenField, TextAreaField, FileField
 from wtforms.validators import InputRequired, Length, EqualTo, Email, DataRequired, ValidationError
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 import re
@@ -34,6 +34,7 @@ def category_length(FlaskForm, field):
 
 def category_choices():      
     return Category.query.all()
+
 ## Auth Forms ##
 
 class AdminRegister(FlaskForm):
@@ -67,3 +68,14 @@ class CreatePost(FlaskForm):
     content = HiddenField('Post Content', validators=[InputRequired()])
     status = SelectField('Post Status', choices=[('Published', 'Published'), ('Draft', 'Draft')], validators=[InputRequired()])
     category = QuerySelectField('Post Category', validators=[InputRequired()], query_factory=category_choices, get_label='category_name')
+
+## Cat/Post forms end ##
+
+## bookstore forms ##
+
+class CreateBook(FlaskForm):
+    name = StringField('Book Name', validators=[InputRequired()])
+    description = TextAreaField('Book Description')
+    img = FileField('Book Image', validators=[InputRequired()])
+    url = StringField('Book Referral Link', validators=[InputRequired()])
+    sku = StringField('Book SKU')
