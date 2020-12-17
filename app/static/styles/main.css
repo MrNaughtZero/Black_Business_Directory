@@ -133,6 +133,8 @@ svg#svg-home {
     font-size: 13px;
 }
 
+/* Admin navigation end */
+
 
 /* admin main content contained */
 
@@ -191,6 +193,8 @@ h2#add-new-cat {
 .category-block-two {
     width: 50%;
 }
+
+/* admin categories end */
 
 /* table actions */
 
@@ -258,6 +262,8 @@ a.cat-delete-link {
     top: 5px;
 }
 
+/* cat table end */
+
 /* admin create blog post */
 
 .admin-all-posts-wrapper {
@@ -319,7 +325,9 @@ li#submit-btn-li {
     left: 6px;
 }
 
-/* Posts page */
+/* admin create blog post end */
+
+/* all Posts page */
 
 .blog-posts-backend {
     background: #e6e6e6;
@@ -391,6 +399,8 @@ input#searchinputbox {
     margin-top: 20px;
 }
 
+/* all posts table */
+
 table#posts-table th {
     font-size: 13px;
     padding-bottom: 10px;
@@ -430,7 +440,11 @@ td.actions-td {
     width: 100px;
 }
 
-/* Front End */
+/* all posts table end */
+
+/* all posts end */
+
+/* Front End - Main Index */
 
 /* nav */
 
@@ -457,6 +471,8 @@ h4#brand-sub {
     margin: 10px;
 }
 
+/* nav end */
+
 /* hero */
 
 div#navbarNavAltMarkup {
@@ -471,20 +487,46 @@ div#carouselExampleSlidesOnly {
     height: 100vh;
 }
 
+.img-car-one {
+    background-image: url("../images/front/slide2-1024x530.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.img-car-one:before, .img-car-two:before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    top: 0; bottom: 0;
+    background: rgba(0,0,0,.5);
+}
+
+.img-car-two {
+    background-image: url("../images/front/slide3-scaled.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 h1.welcome-heading {
     z-index: 99!important;
     color: white;
     position: absolute;
     top: 38%;
-    padding-left: 100px;
+    padding-left: 64px;
     max-width: 800px;
     font-size: 51px;
 }
+
+/* hero end */
 
 /* about mahali */
 
 .about-mahali-wrapper {
     display: flex;
+}
+
+.about-mahli {
+    padding: 50px 0px;
 }
 
 .about-paragraph {
@@ -501,12 +543,10 @@ h1.welcome-heading {
 }
 
 .about-headings {
-    position: relative;
-    left: 91px;
-    top: 29px;
+    margin-left: 91px;
 }
 
-.about-headings h4 {
+.heading-sub {
     padding-bottom: 30px;
 }
 
@@ -515,4 +555,91 @@ h1.welcome-heading {
     border-bottom: 4px solid black;
     width: 139px;
     white-space: nowrap;
+}
+
+/* about end */
+
+/* services */
+
+.services {
+    background: black;
+    color: white;
+    padding-bottom: 100px;
+}
+
+.services-wrapper {
+    max-width: 70%;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+
+p.services-p-text {
+    font-size: 30px;
+    margin-top: -20px;
+    max-width: 400px;
+    font-weight: 500;
+}
+
+/* services grid */
+
+.service-grid-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-service-grid {
+    background-image: url(../images/front/Products.jpg);
+    width: 380px;
+    height: 450px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.service-service-grid {
+    background-image: url(../images/front/Services.jpg);
+    width: 380px;
+    height: 450px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.uplift-service-grid {
+    background-image: url(../images/front/Uplift.jpg);
+    width: 380px;
+    height: 450px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.product-service-title, .service-service-title, .uplift-service-title{
+    display: flex;
+    flex-direction: column;
+    align-items: CENTER;
+    position: absolute;
+    bottom: -7%;
+    background: white;
+    width: 80%;
+    color: green;
+    left: 11%;
+    border-radius: 1px;
+}
+
+.product-service-title h5, .service-service-title h5, .uplift-service-title h5 {
+    font-size: 15px;
+    position: relative;
+    top: 7px;
+    padding-bottom: 4px;
+}
+
+
+/* Media Queries */
+
+@media screen and (max-width:1330px){
+    .services-wrapper {
+        max-width: 100%;
+        padding-left: 50px;
+    }
 }
