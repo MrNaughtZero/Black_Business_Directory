@@ -76,3 +76,7 @@ def delete_post(postID):
     if not Post(id=postID).delete_post():
         return redirect(url_for('admin_bp.dashboard'))
     return redirect(url_for('admin_bp.posts'))
+
+@admin_bp.route('/dashboard/bookstore/new', methods=['GET'])
+def create_book():
+    return render_template('/admin/create-book.html')
