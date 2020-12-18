@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Book</title>
+    {% include 'include/styles.html' %}
+</head>
+<body class="admin-dashboard-body">
+    {% include 'include/admin/side-navigation.html' %}
+         
+    <main>
+        <div class="create-book-wrapper">
+            <div class="create-book-form-container">
+                <form method="POST" action="/dashboard/book/create/add" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name">Title</label>
+                        {{form.name(class="form-control", placeholder="Enter Book Title")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.description(class="form-control", placeholder="Enter Book Description")}}
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        {{form.price(class="form-control", placeholder="£9.99")}}
+                    </div>
+                    <div class="form-group">
+                        {{form.img(class="form-control-file")}}
+                    </div>
+                    <div class="form-group">
+                        <label for="url">Referral URL(e.g ; Amazon)</label>
+                        {{form.url(class="form-control", placeholder="Enter Book Referral Link")}}
+                    </div>
+                    {{form.csrf_token}}
+                    <button type="submit" class="btn btn-primary">Create Book</button>
+                </form>
+
+                <div class="flashed">
+                    {{message[0] | replace('[', '') | replace(']', '') | replace("'", '')   }}
+                </div>
+            </div>
+        </div>
+
+
+    </main>
+
+    {% include 'include/scripts.html' %}
+</body>
+</html>
