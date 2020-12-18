@@ -9,7 +9,7 @@ from app.models import Category
 ## Custom Validators ##
 
 def validate_email(FlaskForm, field):
-    if not (re.search('''(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])''', field.data)) or (len(field.data) > 300):
+    if not (re.search("""(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])""", field.data)) or (len(field.data) > 300):
         raise ValidationError('Please enter a valid email')
 
 def validate_username(FlaskForm, field):
@@ -27,6 +27,16 @@ def validate_passwords_match(FlaskForm, field):
 def category_length(FlaskForm, field):
     if len(field.data) < 3:
         raise ValidationError('Category name must be a minimum 3 characters')
+
+def url_check(FlaskForm, field):
+    if not re.search('''^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$''', field.data):
+        raise ValidationError('URL is not valid')
+
+def price_check(FlaskForm, field):
+    try:
+        float(field.data)
+    except:
+        raise ValidationError('Please enter a correct price')
 
 ## Custom Validators End ##
 
@@ -76,6 +86,7 @@ class CreatePost(FlaskForm):
 class CreateBook(FlaskForm):
     name = StringField('Book Name', validators=[InputRequired()])
     description = TextAreaField('Book Description')
+    price = StringField('Book Price', validators=[InputRequired(), price_check])
     img = FileField('Book Image', validators=[InputRequired()])
-    url = StringField('Book Referral Link', validators=[InputRequired()])
+    url = StringField('Book Referral Link', validators=[InputRequired(), url_check])
     sku = StringField('Book SKU')
