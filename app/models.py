@@ -134,3 +134,28 @@ class Post(db.Model):
 
     def fetch_all(self):
         return self.query.order_by(Post.id).all()
+
+class Book(db.Model):
+    __tablename__ = 'books'
+    id = db.Column(db.Integer, primary_key=True)
+    book_title = db.Column(db.String(400), nullable=False)
+    book_price = db.Column(db.String(100), nullable=True)
+    book_category = db.Column(db.String(300), nullable=True)
+    slug = db.Column(db.String(200), nullable=False)
+    referral_link = db.Column(db.String(500), nullable=False)
+
+    def add_book(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_book(self):
+        db.session.delete(self)
+        db.session.commit()
+        
+    def update_book(self):
+       db.session.commit(self)
+        
+
+    def custom_query(self, query, value):
+        ''' custom user query. Pass through query, and value . example username:Ian '''
+        return self.query.filter_by(**{query:value}).first()
