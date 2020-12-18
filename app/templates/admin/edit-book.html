@@ -27,7 +27,9 @@
                     <div class="form-group">
                         {{form.img(class="form-control-file")}}
                         <div class="edit-book-img">
-                            <img src="{{url_for('static', filename='images/books/' + book.book_img)}}">
+                            {% for item in book.images %}
+                                <img src="{{url_for('static', filename='images/books/' + item.img)}}">
+                            {% endfor %}
                             <svg onclick="deleteUploadedImg()" height="20" width="20" class="w-6 h-6" fill="red" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
                         <input type="hidden" id="img-deleted" name="img-deleted">
