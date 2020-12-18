@@ -4,6 +4,8 @@ from flask import current_app
 from datetime import datetime as dt
 from werkzeug.utils import secure_filename
 from random import choice
+import string
+import os
 
 class Emails():
     ''' Class for sending emails. User Registration, New Business, Forgotten Password, Unauthorised Admin Attempts, Account Lockout '''
