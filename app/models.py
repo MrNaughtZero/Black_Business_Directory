@@ -141,10 +141,11 @@ class Book(db.Model):
     book_title = db.Column(db.String(400), nullable=False)
     book_price = db.Column(db.String(100), nullable=True)
     book_category = db.Column(db.String(300), nullable=True)
+    book_description = db.Column(db.String(3000), nullable=True)
     ## Change book cat once categories have been created
-    book_img = db.Column(db.String(300), nullable=False)
     slug = db.Column(db.String(200), nullable=False)
     referral_link = db.Column(db.String(500), nullable=False)
+    images = db.relationship('Image', backref='book')
 
     def add_book(self):
         db.session.add(self)
@@ -161,3 +162,23 @@ class Book(db.Model):
     def custom_query(self, query, value):
         ''' custom user query. Pass through query, and value . example username:Ian '''
         return self.query.filter_by(**{query:value}).first()
+
+class Image(db.Model):
+    __tablename__ = 'images'
+    id = db.Column(db.Integer, primary_key=True)
+    img = db.Column(db.String(300), nullable=False)
+    img_old_name = db.Column(db.String(300), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+
+    def custom_query(self, query, value):
+        ''' custom user query. Pass through query, and value . example username:Ian '''
+        return self.query.filter_by(**{query:value}).first()
+
+    def add_image(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_image(self):
+        query = self.query.filter_by(id=self.id)
+        db.session.delete(query)
+        db.session.commit()
