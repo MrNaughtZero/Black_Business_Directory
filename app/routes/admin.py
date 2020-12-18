@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from app.login_decorators import admin_required
 from app.models import Category, Post, Book
 from app.forms import CreateCategory, CreatePost, CreateBook, EditBook
-from app.classes import Utilities, Uploads
+from app.classes import Utilities
 import re
 
 admin_bp = Blueprint("admin_bp", __name__)
@@ -87,14 +87,6 @@ def bookstore():
 def create_book():
     return render_template('/admin/create-book.html', form=CreateBook(), message=get_flashed_messages())
 
-@admin_bp.route('/dashboard/book/edit/<id>', methods=['GET'])
-@admin_required
-def edit_book(id):
-    query = Book().custom_query('id', id)
-    if not query:
-        return redirect(url_for('admin_bp.dashboard'))
-    return render_template('/admin/edit-book.html', form=EditBook(), book=query, message=get_flashed_messages())
-
 @admin_bp.route('/dashboard/book/create/add', methods=['POST'])
 @admin_required
 def add_book():
@@ -103,6 +95,23 @@ def add_book():
         flash(list(form.errors.values())[0])
         return redirect(url_for('admin_bp.create_book'))
 
-    Book(book_title=request.form.get('name'), book_price=request.form.get('price'), slug=request.form.get('name').replace(' ', '-'), book_description=request.form.get('description'), referral_link=request.form.get('url'), book_img=Uploads(request.files['img'], 'app/static/images/books').save_upload()).add_book()
+    Book(book_title=request.form.get('name'), book_price=request.form.get('price'), slug=request.form.get('name').replace(' ', '-'), book_description=request.form.get('description'), referral_link=request.form.get('url')).add_book(request.files['img'], request.files['img'].filename)
 
     return 'book added'
+
+@admin_bp.route('/dashboard/book/edit/<id>', methods=['GET'])
+@admin_required
+def edit_book(id):
+    query = Book().custom_query('id', id)
+    if not query:
+        return redirect(url_for('admin_bp.dashboard'))
+    return render_template('/admin/edit-book.html', form=EditBook(), book=query, message=get_flashed_messages())
+
+@admin_bp.route('/dashboard/book/edit/<id>/submit', methods=['POST'])
+@admin_required
+def update_book(id):
+    query = Book().custom_query('id', id)
+    if not query:
+        return redirect(url_for('admin_bp.dashboard'))
+
+    return render_template('/admin/edit-book.html', form=EditBook(), book=query, message=get_flashed_messages())
