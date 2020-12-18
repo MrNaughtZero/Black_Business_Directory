@@ -26,3 +26,8 @@ function menuHideSubPosts(){
     document.getElementsByClassName('hidden-post-links')[0].style.display = 'none';
     document.getElementById('showPostsLink').onclick = menuShowSubPosts;
 }
+
+function deleteUploadedImg(){
+    document.getElementsByClassName('edit-book-img')[0].style.display = 'none';
+    document.getElementById('img').setAttribute('required', '');
+}
