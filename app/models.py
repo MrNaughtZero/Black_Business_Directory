@@ -3,6 +3,7 @@ import hashlib
 from hashlib import sha256
 from random import choice
 import string
+from app.classes import Uploads
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -147,17 +148,20 @@ class Book(db.Model):
     referral_link = db.Column(db.String(500), nullable=False)
     images = db.relationship('Image', backref='book')
 
-    def add_book(self):
+    def add_book(self, file, filename):
         db.session.add(self)
         db.session.commit()
-        return self.id
-
+        
+        Image(id=self.id, img=Uploads(uploaded_file=file, folder='app/static/images/books').save_upload(), img_old_name=filename, book_id=self.id).add_image()
+    
     def delete_book(self):
         db.session.delete(self)
         db.session.commit()
         
-    def update_book(self):
-       db.session.commit(self)
+    def update_book(self, book_img, book_filename, id):
+        query = self.custom_query('id', id)
+        if (book_filename != '') or (book_filename != query.images.img_old_name):
+            Image().update_book(id, book_img, book_filename)
         
     def custom_query(self, query, value):
         ''' custom user query. Pass through query, and value . example username:Ian '''
@@ -168,7 +172,7 @@ class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     img = db.Column(db.String(300), nullable=False)
     img_old_name = db.Column(db.String(300), nullable=False)
-    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
 
     def custom_query(self, query, value):
         ''' custom user query. Pass through query, and value . example username:Ian '''
@@ -181,4 +185,11 @@ class Image(db.Model):
     def delete_image(self):
         query = self.query.filter_by(id=self.id)
         db.session.delete(query)
+        db.session.commit()
+
+    def update_image(self, book_img, book_filename):
+        query = self.custom_query('id', id)
+        Uploads(None, 'app/static/images/books').remove_upload(query.img)
+        query.img = Uploads(book_img, 'app/static/images/books').save_upload()
+        query.img_old_name = book_filename
         db.session.commit()
