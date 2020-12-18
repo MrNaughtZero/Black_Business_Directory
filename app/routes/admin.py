@@ -1,9 +1,9 @@
 from flask import Flask, Blueprint, request, url_for, redirect, flash, get_flashed_messages, render_template
 from flask_login import login_required, current_user
 from app.login_decorators import admin_required
-from app.models import Category, Post
-from app.forms import CreateCategory, CreatePost
-from app.classes import Utilities
+from app.models import Category, Post, Book
+from app.forms import CreateCategory, CreatePost, CreateBook
+from app.classes import Utilities, Uploads
 import re
 
 admin_bp = Blueprint("admin_bp", __name__)
@@ -79,4 +79,15 @@ def delete_post(postID):
 
 @admin_bp.route('/dashboard/bookstore/new', methods=['GET'])
 def create_book():
-    return render_template('/admin/create-book.html')
+    return render_template('/admin/create-book.html', form=CreateBook(), message=get_flashed_messages())
+
+@admin_bp.route('/dashboard/book/create/add', methods=['POST'])
+def add_book():
+    form = CreateBook()
+    if not form.validate_on_submit():
+        flash(list(form.errors.values())[0])
+        return redirect(url_for('admin_bp.create_book'))
+
+    Book(book_title=request.form.get('name'), book_price=request.form.get('price'), slug=request.form.get('name').replace(' ', '-'), referral_link=request.form.get('url'), book_img=Uploads(request.files['img'], 'app/static/images/books').save_upload()).add_book()
+
+    return 'book added'
