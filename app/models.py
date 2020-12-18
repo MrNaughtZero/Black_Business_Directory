@@ -141,12 +141,15 @@ class Book(db.Model):
     book_title = db.Column(db.String(400), nullable=False)
     book_price = db.Column(db.String(100), nullable=True)
     book_category = db.Column(db.String(300), nullable=True)
+    ## Change book cat once categories have been created
+    book_img = db.Column(db.String(300), nullable=False)
     slug = db.Column(db.String(200), nullable=False)
     referral_link = db.Column(db.String(500), nullable=False)
 
     def add_book(self):
         db.session.add(self)
         db.session.commit()
+        return self.id
 
     def delete_book(self):
         db.session.delete(self)
