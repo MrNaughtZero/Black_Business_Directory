@@ -95,10 +95,6 @@ def edit_book(id):
         return redirect(url_for('admin_bp.dashboard'))
     return render_template('/admin/edit-book.html', form=EditBook(), book=query, message=get_flashed_messages())
 
-@admin_bp.route('/test', methods=['POST'])
-def test():
-    return 'test'
-
 @admin_bp.route('/dashboard/book/create/add', methods=['POST'])
 @admin_required
 def add_book():
