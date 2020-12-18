@@ -2,7 +2,7 @@ from flask import Flask, Blueprint, request, url_for, redirect, flash, get_flash
 from flask_login import login_required, current_user
 from app.login_decorators import admin_required
 from app.models import Category, Post, Book
-from app.forms import CreateCategory, CreatePost, CreateBook
+from app.forms import CreateCategory, CreatePost, CreateBook, EditBook
 from app.classes import Utilities, Uploads
 import re
 
@@ -77,17 +77,36 @@ def delete_post(postID):
         return redirect(url_for('admin_bp.dashboard'))
     return redirect(url_for('admin_bp.posts'))
 
+@admin_bp.route('/dashboard/bookstore', methods=['GET'])
+@admin_required
+def bookstore():
+    return render_template('/admin/bookstore.html', books=Book.query.all())
+
 @admin_bp.route('/dashboard/bookstore/new', methods=['GET'])
+@admin_required
 def create_book():
     return render_template('/admin/create-book.html', form=CreateBook(), message=get_flashed_messages())
 
+@admin_bp.route('/dashboard/book/edit/<id>', methods=['GET'])
+@admin_required
+def edit_book(id):
+    query = Book().custom_query('id', id)
+    if not query:
+        return redirect(url_for('admin_bp.dashboard'))
+    return render_template('/admin/edit-book.html', form=EditBook(), book=query, message=get_flashed_messages())
+
+@admin_bp.route('/test', methods=['POST'])
+def test():
+    return 'test'
+
 @admin_bp.route('/dashboard/book/create/add', methods=['POST'])
+@admin_required
 def add_book():
     form = CreateBook()
     if not form.validate_on_submit():
         flash(list(form.errors.values())[0])
         return redirect(url_for('admin_bp.create_book'))
 
-    Book(book_title=request.form.get('name'), book_price=request.form.get('price'), slug=request.form.get('name').replace(' ', '-'), referral_link=request.form.get('url'), book_img=Uploads(request.files['img'], 'app/static/images/books').save_upload()).add_book()
+    Book(book_title=request.form.get('name'), book_price=request.form.get('price'), slug=request.form.get('name').replace(' ', '-'), book_description=request.form.get('description'), referral_link=request.form.get('url'), book_img=Uploads(request.files['img'], 'app/static/images/books').save_upload()).add_book()
 
     return 'book added'
