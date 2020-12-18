@@ -90,3 +90,10 @@ class CreateBook(FlaskForm):
     img = FileField('Book Image', validators=[InputRequired()])
     url = StringField('Book Referral Link', validators=[InputRequired(), url_check])
     sku = StringField('Book SKU')
+
+class EditBook(FlaskForm):
+    name = StringField('Book Name', validators=[InputRequired()])
+    description = TextAreaField('Book Description')
+    price = StringField('Book Price', validators=[InputRequired(), price_check])
+    img = FileField('Book Image')
+    url = StringField('Book Referral Link', validators=[InputRequired(), url_check])
