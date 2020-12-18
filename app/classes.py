@@ -12,6 +12,7 @@ class Emails():
     def __init__(self, email_to):
         self.email_to = email_to
 
+    @staticmethod
     def smtp_information(send_to, message_content):
         try:
             server_ssl = smtplib.SMTP_SSL('smtp.gmail.com', 465)
@@ -26,15 +27,16 @@ class Emails():
             return False
 
     def admin_registration(self):
-        send_to = self.email
+        send_to = self.email_to
         subject = 'Mahali - Admin Registered'
         body = 'New Admin Registration. Please use http://127.0.0.1:5000/auth/login to login.'
         message_content = f'subject: {subject}\n\n{body}'
         
-        emailInformation(send_to, message_content)
+        Emails.smtp_information(send_to, message_content)
 
 class Utilities():
     ''' class full of static methods'''
+    @staticmethod
     def post_timestamp():
         return dt.now().strftime("%d %B, %Y")
 
