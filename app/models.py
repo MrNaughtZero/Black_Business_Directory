@@ -155,7 +155,6 @@ class Book(db.Model):
     def update_book(self):
        db.session.commit(self)
         
-
     def custom_query(self, query, value):
         ''' custom user query. Pass through query, and value . example username:Ian '''
         return self.query.filter_by(**{query:value}).first()
